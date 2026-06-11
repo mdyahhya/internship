@@ -2167,17 +2167,14 @@
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
         // Password protected screen initialization
-        document.addEventListener('DOMContentLoaded', async () => {
+        document.addEventListener('DOMContentLoaded', () => {
             const initialLoader = document.getElementById('initial-loader');
             const savedPassword = localStorage.getItem('modules_password_session');
-            let correctPassword = '#FlutterJavascript'; // hardcoded fallback
+            const correctPassword = '#FlutterJavascript';
 
             console.log('%c[Dominal Auth] Starting password check...', 'color:#1e3774;font-weight:bold');
-            console.log('[Dominal Auth] Protocol:', window.location.protocol);
-            console.log('[Dominal Auth] Hostname:', window.location.hostname, '| Port:', window.location.port);
-            console.log('[Dominal Auth] Saved session in localStorage:', savedPassword ? 'EXISTS' : 'NONE');
+            console.log('[Dominal Auth] Saved session:', savedPassword ? 'EXISTS' : 'NONE');
 
-            // Remove initial loader
             function removeInitialLoader() {
                 if (initialLoader) {
                     initialLoader.style.opacity = '0';
@@ -2185,49 +2182,21 @@
                 }
             }
 
-            // Try to fetch the correct password from the Netlify function
-            const isFileProtocol = window.location.protocol === 'file:';
-
-            if (!isFileProtocol) {
-                console.log('[Dominal Auth] Fetching password from Netlify function...');
-                try {
-                    const response = await fetch('/.netlify/functions/get-password');
-                    console.log('[Dominal Auth] get-password response status:', response.status);
-
-                    if (response.ok) {
-                        const data = await response.json();
-                        if (data && data.password) {
-                            correctPassword = data.password;
-                            console.log('%c[Dominal Auth] ✅ Password loaded from Netlify function.', 'color:green;font-weight:bold');
-                        } else {
-                            console.warn('[Dominal Auth] ⚠️ Function responded but returned no password field. Using hardcoded fallback.');
-                        }
-                    } else if (response.status === 404) {
-                        console.warn('[Dominal Auth] ⚠️ Netlify function not found (404) — function may not be deployed yet. Using hardcoded fallback.');
-                    } else {
-                        console.warn('[Dominal Auth] ⚠️ Unexpected status', response.status, '— using hardcoded fallback.');
-                    }
-                } catch (err) {
-                    console.warn('[Dominal Auth] ⚠️ Network error:', err.message, '— using hardcoded fallback.');
-                }
-            } else {
-                console.log('[Dominal Auth] file:// protocol — skipping function fetch, using hardcoded fallback.');
-            }
-
-            console.log('[Dominal Auth] Checking session against resolved password...');
-
             // Check if user already has a valid session
-            if (savedPassword && savedPassword === correctPassword) {
+            if (savedPassword === correctPassword) {
                 console.log('%c[Dominal Auth] ✅ Session valid — unlocking page.', 'color:green;font-weight:bold');
                 document.body.classList.remove('locked');
                 removeInitialLoader();
                 return;
-            } else if (savedPassword) {
-                console.log('[Dominal Auth] Stale session found — clearing and showing lock screen.');
-                localStorage.removeItem('modules_password_session');
-            } else {
-                console.log('[Dominal Auth] No session — showing lock screen.');
             }
+
+            // Clear any stale session
+            if (savedPassword) {
+                console.log('[Dominal Auth] Stale session cleared.');
+                localStorage.removeItem('modules_password_session');
+            }
+
+            console.log('[Dominal Auth] No valid session — showing lock screen.');
 
             // Show lock screen
             removeInitialLoader();
