@@ -2169,11 +2169,11 @@
         // Password protected screen initialization
         document.addEventListener('DOMContentLoaded', () => {
             const initialLoader = document.getElementById('initial-loader');
-            const savedPasswordHash = localStorage.getItem('modules_password_session');
-            const correctPasswordHash = '19a67c2a53695668e4916e9e64cf0613352ec614fd682a8bf8bf98a471db5e8d';
+            const savedPassword = localStorage.getItem('modules_password_session');
+            const correctPassword = atob('a290bGlu'); // Decodes to "kotlin"
 
             console.log('%c[Dominal Auth] Starting password check...', 'color:#1e3774;font-weight:bold');
-            console.log('[Dominal Auth] Saved session:', savedPasswordHash ? 'EXISTS' : 'NONE');
+            console.log('[Dominal Auth] Saved session:', savedPassword ? 'EXISTS' : 'NONE');
 
             function removeInitialLoader() {
                 if (initialLoader) {
@@ -2183,7 +2183,7 @@
             }
 
             // Check if user already has a valid session
-            if (savedPasswordHash === correctPasswordHash) {
+            if (savedPassword === correctPassword) {
                 console.log('%c[Dominal Auth] ✅ Session valid — unlocking page.', 'color:green;font-weight:bold');
                 document.body.classList.remove('locked');
                 removeInitialLoader();
@@ -2191,7 +2191,7 @@
             }
 
             // Clear any stale session
-            if (savedPasswordHash) {
+            if (savedPassword) {
                 console.log('[Dominal Auth] Stale session cleared.');
                 localStorage.removeItem('modules_password_session');
             }
@@ -2259,34 +2259,20 @@
                 }
             });
 
-            // Hash helper function using SHA-256 Web Crypto API
-            async function sha256(message) {
-                const msgBuffer = new TextEncoder().encode(message);
-                const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-                const hashArray = Array.from(new Uint8Array(hashBuffer));
-                return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-            }
-
-            async function verify() {
+            function verify() {
                 const entered = passwordInput.value;
-                console.log('[Dominal Auth] Password submitted. Checking hash...');
-                
-                try {
-                    const enteredHash = await sha256(entered);
-                    if (enteredHash === correctPasswordHash) {
-                        console.log('%c[Dominal Auth] ✅ Correct password — unlocking and saving session.', 'color:green;font-weight:bold');
-                        localStorage.setItem('modules_password_session', enteredHash);
-                        passwordScreen.style.opacity = '0';
-                        document.body.classList.remove('locked');
-                        setTimeout(() => passwordScreen.remove(), 300);
-                    } else {
-                        console.warn('[Dominal Auth] ❌ Incorrect password entered.');
-                        errorMsg.style.display = 'block';
-                        passwordInput.classList.add('shake');
-                        setTimeout(() => passwordInput.classList.remove('shake'), 400);
-                    }
-                } catch (err) {
-                    console.error('[Dominal Auth] Error hashing password:', err);
+                console.log('[Dominal Auth] Password submitted. Checking...');
+                if (entered === correctPassword) {
+                    console.log('%c[Dominal Auth] ✅ Correct password — unlocking and saving session.', 'color:green;font-weight:bold');
+                    localStorage.setItem('modules_password_session', entered);
+                    passwordScreen.style.opacity = '0';
+                    document.body.classList.remove('locked');
+                    setTimeout(() => passwordScreen.remove(), 300);
+                } else {
+                    console.warn('[Dominal Auth] ❌ Incorrect password entered.');
+                    errorMsg.style.display = 'block';
+                    passwordInput.classList.add('shake');
+                    setTimeout(() => passwordInput.classList.remove('shake'), 400);
                 }
             }
 
