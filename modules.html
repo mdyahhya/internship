@@ -1,0 +1,2299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Internship Modules | Software Development Internship at Dominal Tech</title>
+    <meta name="description"
+        content="Complete 8-module syllabus for the Software Development Internship at Dominal Tech — deployment, Supabase, web design, AI APIs, PWA, Electron, and RAG." />
+    <style>
+        :root {
+            --bg: #ffffff;
+            --surface: #f6f8fc;
+            --surface-2: #eef2fb;
+            --text: #0b0b0c;
+            --muted: #566070;
+            --line: #dbe3f0;
+            --accent: #0c1a3b;
+            --accent-2: #11224b;
+            --accent-3: #1e3774;
+            --accent-soft: #e9eefb;
+            --shadow: 0 20px 60px rgba(12, 26, 59, .08);
+            --radius-xl: 30px;
+            --radius-lg: 22px;
+            --radius-md: 16px;
+            --container: 1240px;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            margin: 0;
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.56;
+            overflow-x: hidden;
+        }
+
+        img {
+            display: block;
+            max-width: 100%
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit
+        }
+
+        button {
+            font: inherit
+        }
+
+        .container {
+            width: min(var(--container), calc(100% - 32px));
+            margin-inline: auto;
+        }
+
+        .backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            background:
+                radial-gradient(circle at top right, rgba(30, 55, 116, .10), transparent 28%),
+                radial-gradient(circle at left center, rgba(12, 26, 59, .06), transparent 24%),
+                linear-gradient(to bottom, #fff 0%, #fbfcff 100%);
+        }
+
+        .grid-bg {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background-image:
+                linear-gradient(rgba(12, 26, 59, .045) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(12, 26, 59, .045) 1px, transparent 1px);
+            background-size: 30px 30px;
+            mask-image: radial-gradient(circle at center, black 45%, transparent 86%);
+            opacity: .55;
+            pointer-events: none;
+        }
+
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            backdrop-filter: blur(16px);
+            background: rgba(255, 255, 255, .82);
+            border-bottom: 1px solid rgba(12, 26, 59, .08);
+        }
+
+        .topbar-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            min-height: 76px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            min-width: 0;
+        }
+
+        .brand-logo {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            background: #fff;
+            border: 1px solid rgba(12, 26, 59, .10);
+            object-fit: contain;
+            padding: 6px;
+            box-shadow: 0 8px 22px rgba(12, 26, 59, .06);
+        }
+
+        .brand-text {
+            min-width: 0;
+        }
+
+        .brand-text strong {
+            display: block;
+            font-size: 1rem;
+            letter-spacing: -.03em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .brand-text span {
+            color: var(--muted);
+            font-size: .92rem;
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 13px 18px;
+            border-radius: 999px;
+            border: 1px solid transparent;
+            font-weight: 700;
+            transition: .22s ease;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #fff;
+            box-shadow: 0 14px 34px rgba(12, 26, 59, .17);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            background: var(--accent-2);
+        }
+
+        .btn-ghost {
+            background: #fff;
+            color: var(--accent);
+            border-color: rgba(12, 26, 59, .10);
+        }
+
+        .btn-ghost:hover {
+            transform: translateY(-2px);
+            background: var(--accent-soft);
+        }
+
+        .hero {
+            padding: 42px 0 22px;
+        }
+
+        .hero-shell {
+            display: grid;
+            grid-template-columns: 1.05fr .95fr;
+            gap: 18px;
+            align-items: stretch;
+        }
+
+        .hero-card,
+        .hero-side {
+            position: relative;
+            background: #fff;
+            border: 1px solid rgba(12, 26, 59, .08);
+            border-radius: 34px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .hero-card {
+            padding: 34px;
+            background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border-radius: 999px;
+            padding: 10px 14px;
+            background: var(--accent-soft);
+            color: var(--accent);
+            font-size: .92rem;
+            font-weight: 800;
+            margin-bottom: 18px;
+        }
+
+        h1 {
+            margin: 0 0 14px;
+            font-size: clamp(2.2rem, 5vw, 4.6rem);
+            line-height: .98;
+            letter-spacing: -.065em;
+            max-width: 10ch;
+        }
+
+        .hero-card p {
+            margin: 0 0 24px;
+            color: var(--muted);
+            font-size: 1.06rem;
+            max-width: 63ch;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
+
+        .top-pills {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        .pill {
+            border: 1px solid rgba(12, 26, 59, .08);
+            background: #fff;
+            border-radius: 20px;
+            padding: 14px 16px;
+        }
+
+        .pill strong {
+            display: block;
+            color: var(--accent);
+            margin-bottom: 4px;
+            font-size: 1.02rem;
+        }
+
+        .pill span {
+            color: var(--muted);
+            font-size: .93rem;
+        }
+
+        .hero-side {
+            background: linear-gradient(160deg, #0c1a3b 0%, #172c60 56%, #23428d 100%);
+            color: #fff;
+            padding: 28px;
+            min-height: 100%;
+        }
+
+        .hero-side svg.bg-lines {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            opacity: .35;
+        }
+
+        .hero-side-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .side-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        .domain-chip {
+            border: 1px solid rgba(255, 255, 255, .16);
+            background: rgba(255, 255, 255, .08);
+            border-radius: 999px;
+            padding: 10px 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            backdrop-filter: blur(10px);
+        }
+
+        .side-note {
+            max-width: 34ch;
+            color: rgba(255, 255, 255, .84);
+        }
+
+        .module-preview {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .preview-card {
+            border-radius: 18px;
+            padding: 15px;
+            background: rgba(255, 255, 255, .08);
+            border: 1px solid rgba(255, 255, 255, .12);
+            min-height: 88px;
+        }
+
+        .preview-card strong {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 1rem;
+        }
+
+        .preview-card span {
+            color: rgba(255, 255, 255, .78);
+            font-size: .94rem;
+        }
+
+        section {
+            padding: 30px 0;
+        }
+
+        .section-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: 18px;
+            margin-bottom: 20px;
+        }
+
+        .section-head h2 {
+            margin: 0;
+            font-size: clamp(1.7rem, 3vw, 3rem);
+            line-height: 1.02;
+            letter-spacing: -.05em;
+        }
+
+        .section-head p {
+            margin: 0;
+            max-width: 58ch;
+            color: var(--muted);
+        }
+
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+        }
+
+        .overview-card {
+            background: #fff;
+            border: 1px solid rgba(12, 26, 59, .08);
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            padding: 22px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .overview-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent) 0%, var(--accent-3) 100%);
+        }
+
+        .overview-card .icon {
+            width: 54px;
+            height: 54px;
+            border-radius: 18px;
+            background: var(--accent-soft);
+            color: var(--accent);
+            display: grid;
+            place-items: center;
+            margin-bottom: 14px;
+        }
+
+        .overview-card h3 {
+            margin: 0 0 8px;
+            font-size: 1.12rem;
+            letter-spacing: -.03em;
+        }
+
+        .overview-card p {
+            margin: 0;
+            color: var(--muted);
+            font-size: .96rem;
+        }
+
+        .module-nav {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        .jump {
+            background: #fff;
+            border: 1px solid rgba(12, 26, 59, .08);
+            border-radius: 18px;
+            padding: 14px 16px;
+            box-shadow: var(--shadow);
+            transition: .2s ease;
+        }
+
+        .jump:hover {
+            transform: translateY(-3px);
+            background: var(--accent-soft);
+            border-color: rgba(12, 26, 59, .14);
+        }
+
+        .jump strong {
+            display: block;
+            color: var(--accent);
+            font-size: .98rem;
+            margin-bottom: 4px;
+        }
+
+        .jump span {
+            color: var(--muted);
+            font-size: .92rem;
+        }
+
+        .module-section {
+            position: relative;
+            scroll-margin-top: 90px;
+        }
+
+        .module-shell {
+            display: grid;
+            grid-template-columns: 360px 1fr;
+            gap: 18px;
+            align-items: start;
+        }
+
+        .module-left {
+            position: sticky;
+            top: 96px;
+            background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+            border: 1px solid rgba(12, 26, 59, .08);
+            border-radius: 32px;
+            box-shadow: var(--shadow);
+            padding: 24px;
+            overflow: hidden;
+        }
+
+        .module-left::after {
+            content: "";
+            position: absolute;
+            right: -40px;
+            top: -40px;
+            width: 180px;
+            height: 180px;
+            border-radius: 999px;
+            background: radial-gradient(circle, rgba(30, 55, 116, .10) 0%, rgba(30, 55, 116, 0) 70%);
+        }
+
+        .module-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 52px;
+            height: 52px;
+            border-radius: 999px;
+            background: var(--accent);
+            color: #fff;
+            font-weight: 800;
+            font-size: 1.08rem;
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .module-left h3 {
+            margin: 0 0 10px;
+            font-size: 1.75rem;
+            line-height: 1.02;
+            letter-spacing: -.05em;
+            position: relative;
+            z-index: 1;
+        }
+
+        .module-left p {
+            margin: 0 0 18px;
+            color: var(--muted);
+            position: relative;
+            z-index: 1;
+        }
+
+        .module-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 18px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tag {
+            font-size: .85rem;
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: var(--accent-soft);
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .example-box {
+            position: relative;
+            z-index: 1;
+            border: 1px solid rgba(12, 26, 59, .08);
+            border-radius: 20px;
+            background: #fff;
+            padding: 16px;
+        }
+
+        .example-box strong {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--accent);
+        }
+
+        .example-box span {
+            color: var(--muted);
+            font-size: .94rem;
+        }
+
+        .module-right {
+            display: grid;
+            gap: 12px;
+        }
+
+        .point-card {
+            background: #fff;
+            border: 1px solid rgba(12, 26, 59, .08);
+            border-radius: 22px;
+            box-shadow: var(--shadow);
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 58px 1fr;
+            gap: 16px;
+            align-items: flex-start;
+        }
+
+        .point-index {
+            width: 58px;
+            height: 58px;
+            border-radius: 20px;
+            display: grid;
+            place-items: center;
+            background: var(--accent-soft);
+            color: var(--accent);
+            font-weight: 800;
+            font-size: 1rem;
+        }
+
+        .point-card h4 {
+            margin: 0 0 8px;
+            font-size: 1.08rem;
+            letter-spacing: -.02em;
+        }
+
+        .point-card p {
+            margin: 0;
+            color: var(--muted);
+            font-size: .97rem;
+        }
+
+        .module-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(12, 26, 59, .15), transparent);
+            margin: 10px 0 2px;
+        }
+
+        .summary-band {
+            background: linear-gradient(135deg, #0c1a3b 0%, #162d62 55%, #24438f 100%);
+            color: #fff;
+            border-radius: 34px;
+            padding: 28px;
+            box-shadow: 0 26px 70px rgba(12, 26, 59, .16);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .summary-band::after {
+            content: "";
+            position: absolute;
+            width: 360px;
+            height: 360px;
+            border-radius: 999px;
+            right: -100px;
+            bottom: -110px;
+            background: radial-gradient(circle, rgba(255, 255, 255, .16) 0%, rgba(255, 255, 255, 0) 70%);
+        }
+
+        .summary-band h2 {
+            margin: 0 0 12px;
+            font-size: clamp(1.8rem, 3.5vw, 3rem);
+            line-height: 1.02;
+            letter-spacing: -.05em;
+            position: relative;
+            z-index: 1;
+        }
+
+        .summary-band p {
+            margin: 0 0 20px;
+            max-width: 64ch;
+            color: rgba(255, 255, 255, .82);
+            position: relative;
+            z-index: 1;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .summary-item {
+            border-radius: 18px;
+            padding: 16px;
+            background: rgba(255, 255, 255, .08);
+            border: 1px solid rgba(255, 255, 255, .12);
+        }
+
+        .summary-item strong {
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .summary-item span {
+            color: rgba(255, 255, 255, .78);
+            font-size: .94rem;
+        }
+
+        .footer {
+            padding: 28px 0 44px;
+        }
+
+        .footer-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            border: 1px solid rgba(12, 26, 59, .08);
+            border-radius: 28px;
+            background: #fff;
+            box-shadow: var(--shadow);
+            padding: 22px;
+        }
+
+        .footer-box p {
+            margin: 0;
+            color: var(--muted);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity .7s ease, transform .7s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        @media (max-width: 1180px) {
+
+            .hero-shell,
+            .module-shell {
+                grid-template-columns: 1fr;
+            }
+
+            .module-left {
+                position: relative;
+                top: auto;
+            }
+
+            .overview-grid,
+            .module-nav,
+            .summary-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 780px) {
+
+            .top-pills,
+            .overview-grid,
+            .module-nav,
+            .summary-grid,
+            .module-preview {
+                grid-template-columns: 1fr;
+            }
+
+            .point-card {
+                grid-template-columns: 1fr;
+            }
+
+            .point-index {
+                width: 52px;
+                height: 52px;
+            }
+
+            .brand-text span {
+                display: none;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                width: min(var(--container), calc(100% - 20px));
+            }
+
+            .hero-card,
+            .hero-side,
+            .module-left,
+            .summary-band {
+                border-radius: 26px;
+            }
+
+            .hero-card,
+            .hero-side {
+                padding: 22px;
+            }
+
+            .nav-actions .btn-ghost {
+                display: none;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+
+        .learning-source-card {
+            position: relative;
+            z-index: 1;
+            border: 1px dashed rgba(12, 26, 59, .25);
+            border-radius: 20px;
+            background: rgba(12, 26, 59, .02);
+            padding: 16px;
+            margin-top: 14px;
+        }
+
+        .learning-source-card strong {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--accent);
+            font-size: 0.95rem;
+        }
+
+        .learning-source-card span {
+            color: var(--muted);
+            font-size: .92rem;
+            line-height: 1.45;
+            display: block;
+        }
+
+        /* Password Screen styles */
+        body.locked {
+            overflow: hidden;
+        }
+        body.locked main, body.locked header, body.locked footer {
+            display: none !important;
+        }
+        #password-screen {
+            position: fixed;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+        .password-card {
+            background: #ffffff;
+            border: 1px solid rgba(12, 26, 59, 0.08);
+            border-radius: 28px;
+            padding: 40px;
+            width: 100%;
+            max-width: 440px;
+            box-shadow: 0 30px 70px rgba(12, 26, 59, 0.15);
+            text-align: center;
+            animation: cardAppear 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes cardAppear {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.98);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        .password-card h2 {
+            margin: 0 0 12px;
+            font-size: 1.8rem;
+            letter-spacing: -0.04em;
+            color: var(--accent);
+        }
+        .password-card p {
+            margin: 0 0 24px;
+            color: var(--muted);
+            font-size: 0.98rem;
+            line-height: 1.5;
+        }
+        .password-input-wrapper {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        .password-input-wrapper input {
+            width: 100%;
+            padding: 16px 52px 16px 20px;
+            border-radius: 999px;
+            border: 1px solid rgba(12, 26, 59, 0.15);
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.2s ease;
+            text-align: center;
+            background: var(--surface);
+        }
+        .password-input-wrapper input:focus {
+            border-color: var(--accent);
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(12, 26, 59, 0.08);
+        }
+        #toggle-password-visibility {
+            position: absolute;
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--muted);
+            padding: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.2s ease;
+        }
+        #toggle-password-visibility:hover {
+            color: var(--accent);
+        }
+        .password-card .btn-submit {
+            width: 100%;
+            padding: 16px;
+            border-radius: 999px;
+            background: var(--accent);
+            color: #fff;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 10px 25px rgba(12, 26, 59, 0.15);
+        }
+        .password-card .btn-submit:hover {
+            background: var(--accent-2);
+            transform: translateY(-1px);
+            box-shadow: 0 12px 28px rgba(12, 26, 59, 0.2);
+        }
+        .password-card .btn-submit:active {
+            transform: translateY(0);
+        }
+        #password-error {
+            color: #d93838;
+            font-size: 0.88rem;
+            margin-top: 8px;
+            display: none;
+            font-weight: 600;
+        }
+        .shake {
+            animation: shakeInput 0.4s ease;
+        }
+        @keyframes shakeInput {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-6px); }
+            40%, 80% { transform: translateX(6px); }
+        }
+        .intern-notice {
+            background: rgba(12, 26, 59, 0.04);
+            border: 1px solid rgba(12, 26, 59, 0.08);
+            color: var(--accent);
+            border-radius: 12px;
+            padding: 10px 14px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .spinner {
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(12, 26, 59, 0.1);
+            border-top: 3px solid var(--accent);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 16px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+
+<body class="locked">
+    <div id="initial-loader" style="position: fixed; inset: 0; background: #ffffff; z-index: 999999; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 1; transition: opacity 0.2s ease;">
+        <div class="spinner"></div>
+        <div style="color: var(--accent); font-weight: 600; font-size: 0.95rem; font-family: sans-serif; letter-spacing: -0.01em;">Checking Access...</div>
+    </div>
+    <div class="backdrop"></div>
+    <div class="grid-bg"></div>
+
+    <header class="topbar">
+        <div class="container topbar-inner">
+            <div class="brand">
+                <img src="dominalnew.jpeg" alt="Dominal Tech logo" class="brand-logo" />
+                <div class="brand-text">
+                    <strong>Software Development Internship at Dominal Tech</strong>
+                    <span>Complete 8 Modules Syllabus • internship.dominal.in</span>
+                </div>
+            </div>
+
+            <div class="nav-actions">
+                <a href="index.html" class="btn btn-ghost">Back to Overview</a>
+                <a href="#module-1" class="btn btn-primary">Start Modules</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container hero-shell">
+                <div class="hero-card reveal">
+                    <div class="eyebrow">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <rect x="4" y="4" width="16" height="16" rx="4" stroke="currentColor" stroke-width="2" />
+                            <path d="M8 12H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                            <path d="M12 8V16" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        Full Syllabus • 8 Modules • Project-Driven Learning
+                    </div>
+
+                    <h1>Complete Internship Modules at Dominal Tech</h1>
+                    <p>
+                        Explore our comprehensive 8-module curriculum, detailing the 10 key technical concepts covered in each phase. Please note that the detailed execution, practical integration, and step-by-step application of these points will be taught directly during the internship sessions and guided by the custom Learning Software developed by Dominal Tech.
+                    </p>
+
+                    <div class="hero-actions">
+                        <a href="#module-1" class="btn btn-primary">Explore Module 1</a>
+                        <a href="index.html" class="btn btn-ghost">Open Main Page</a>
+                    </div>
+
+                    <div class="top-pills">
+                        <div class="pill">
+                            <strong>Module 1</strong>
+                            <span>Web Basics, GitHub, Vercel, Domains</span>
+                        </div>
+                        <div class="pill">
+                            <strong>Module 2</strong>
+                            <span>Supabase, Login, Live Data</span>
+                        </div>
+                        <div class="pill">
+                            <strong>Module 3</strong>
+                            <span>Professional Website UI Patterns</span>
+                        </div>
+                        <div class="pill">
+                            <strong>Module 4</strong>
+                            <span>AI API Integration & Chatbots</span>
+                        </div>
+                        <div class="pill">
+                            <strong>Module 5</strong>
+                            <span>PWA Basics</span>
+                        </div>
+                        <div class="pill">
+                            <strong>Module 6</strong>
+                            <span>PWA Notifications</span>
+                        </div>
+                        <div class="pill">
+                            <strong>Module 7</strong>
+                            <span>Electron Desktop Conversion</span>
+                        </div>
+                        <div class="pill">
+                            <strong>Module 8</strong>
+                            <span>RAG Basics & Custom Data</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-side reveal">
+                    <svg class="bg-lines" viewBox="0 0 600 600" preserveAspectRatio="none" aria-hidden="true">
+                        <circle cx="300" cy="120" r="80" fill="none" stroke="white" stroke-opacity=".16"
+                            stroke-width="2">
+                            <animate attributeName="r" values="70;100;70" dur="7s" repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="440" cy="270" r="120" fill="none" stroke="white" stroke-opacity=".1"
+                            stroke-width="2">
+                            <animate attributeName="stroke-opacity" values=".08;.18;.08" dur="6s"
+                                repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="180" cy="380" r="150" fill="none" stroke="white" stroke-opacity=".09"
+                            stroke-width="2">
+                            <animate attributeName="r" values="130;165;130" dur="8s" repeatCount="indefinite" />
+                        </circle>
+                        <path d="M40 80C120 130 180 190 300 170C410 150 480 80 560 120" fill="none" stroke="white"
+                            stroke-opacity=".18" stroke-width="2">
+                            <animate attributeName="d" dur="8s" repeatCount="indefinite" values="M40 80C120 130 180 190 300 170C410 150 480 80 560 120;
+                        M40 120C120 60 180 100 300 170C420 240 500 220 560 160;
+                        M40 80C120 130 180 190 300 170C410 150 480 80 560 120" />
+                        </path>
+                    </svg>
+
+                    <div class="hero-side-content">
+                        <div class="side-top">
+                            <div class="domain-chip">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                    <path d="M3 12H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                                    <path
+                                        d="M12 3C14.5 5.6 16 8.71 16 12C16 15.29 14.5 18.4 12 21C9.5 18.4 8 15.29 8 12C8 8.71 9.5 5.6 12 3Z"
+                                        stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                                </svg>
+                                internship.dominal.in
+                            </div>
+                            <div class="side-note">
+                                Learn how websites go live, how data gets connected, how web apps become installable and
+                                desktop-ready, and how AI products move from basic chatbots to RAG.
+                            </div>
+                        </div>
+
+                        <div class="module-preview">
+                            <div class="preview-card">
+                                <strong>Begin with shipping</strong>
+                                <span>HTML, CSS, JS basics → GitHub → Vercel → domains → DNS.</span>
+                            </div>
+                            <div class="preview-card">
+                                <strong>Then backend and auth</strong>
+                                <span>Supabase, URL + anon key, login, sessions, realtime updates.</span>
+                            </div>
+                            <div class="preview-card">
+                                <strong>Then product polish</strong>
+                                <span>Professional page patterns, SVGs, navigation, sliders, layout discipline.</span>
+                            </div>
+                            <div class="preview-card">
+                                <strong>Then app-level thinking</strong>
+                                <span>AI, PWA, notifications, Electron packaging, and RAG basics.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+                <div class="section-head reveal">
+                    <div>
+                        <h2>Curriculum structure</h2>
+                    </div>
+                    <p>
+                        The module order is designed to move from fundamentals and deployment toward backend
+                        integration, polished interface building, AI workflows, app conversion, and custom-data AI
+                        systems.
+                    </p>
+                </div>
+
+                <div class="overview-grid">
+                    <article class="overview-card reveal">
+                        <div class="icon">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="M4 7L12 3L20 7L12 11L4 7Z" stroke="currentColor" stroke-width="2"
+                                    stroke-linejoin="round" />
+                                <path d="M4 12L12 16L20 12" stroke="currentColor" stroke-width="2"
+                                    stroke-linejoin="round" />
+                                <path d="M4 17L12 21L20 17" stroke="currentColor" stroke-width="2"
+                                    stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                        <h3>Foundation first</h3>
+                        <p>Interns first understand how websites work, how code becomes live, and how the basic web
+                            stack fits together.</p>
+                    </article>
+
+                    <article class="overview-card reveal">
+                        <div class="icon">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <rect x="3" y="4" width="18" height="16" rx="3" stroke="currentColor"
+                                    stroke-width="2" />
+                                <path d="M7 8H17" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                                <path d="M7 12H13" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                            </svg>
+                        </div>
+                        <h3>Backend next</h3>
+                        <p>Once hosting is clear, they learn how Supabase connects the frontend to a real backend with
+                            login and live data.</p>
+                    </article>
+
+                    <article class="overview-card reveal">
+                        <div class="icon">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="2" />
+                                <path d="M12 8V12L15 15" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" />
+                            </svg>
+                        </div>
+                        <h3>Modern product layer</h3>
+                        <p>They then build stronger interfaces, use AI APIs, and make the web app feel more app-like
+                            with installability and notifications.</p>
+                    </article>
+
+                    <article class="overview-card reveal">
+                        <div class="icon">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="M4 5H20V15H4V5Z" stroke="currentColor" stroke-width="2" />
+                                <path d="M10 19H14" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                                <path d="M8 15V19" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                                <path d="M16 15V19" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                            </svg>
+                        </div>
+                        <h3>Advanced expansion</h3>
+                        <p>The final modules show how web apps become desktop apps and how AI can answer from private or
+                            custom data using RAG basics.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+                <div class="section-head reveal">
+                    <div>
+                        <h2>Jump to any module</h2>
+                    </div>
+                    <p>
+                        Each module below includes 10 essential teaching points with concise explanations and practical
+                        framing for internship delivery.
+                    </p>
+                </div>
+
+                <div class="module-nav">
+                    <a class="jump reveal" href="#module-1"><strong>Module 1</strong><span>Web basics, GitHub, Vercel,
+                            domain flow</span></a>
+                    <a class="jump reveal" href="#module-2"><strong>Module 2</strong><span>Supabase, auth, URL + anon
+                            key, live data</span></a>
+                    <a class="jump reveal" href="#module-3"><strong>Module 3</strong><span>Professional website UI
+                            patterns</span></a>
+                    <a class="jump reveal" href="#module-4"><strong>Module 4</strong><span>AI API integration and basic
+                            chatbot</span></a>
+                    <a class="jump reveal" href="#module-5"><strong>Module 5</strong><span>PWA basics</span></a>
+                    <a class="jump reveal" href="#module-6"><strong>Module 6</strong><span>PWA notifications</span></a>
+                    <a class="jump reveal" href="#module-7"><strong>Module 7</strong><span>Electron desktop
+                            conversion</span></a>
+                    <a class="jump reveal" href="#module-8"><strong>Module 8</strong><span>RAG basics with custom
+                            data</span></a>
+                </div>
+            </div>
+        </section>
+
+        <section id="module-1" class="module-section">
+            <div class="container module-shell">
+                <aside class="module-left reveal">
+                    <div class="module-num">01</div>
+                    <h3>Module 1<br>Web Basics, GitHub, Vercel, Domains</h3>
+                    <p>
+                        This module builds the first layer of understanding: what websites are made of, how they go
+                        online, and how domains connect to hosting.
+                    </p>
+                    <div class="module-tags">
+                        <span class="tag">HTML</span>
+                        <span class="tag">CSS</span>
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">GitHub</span>
+                        <span class="tag">Vercel</span>
+                        <span class="tag">DNS</span>
+                    </div>
+                    <div class="example-box">
+                        <strong>Simple example</strong>
+                        <span>Create a basic website, push it to GitHub, connect the repo to Vercel, and understand how
+                            a purchased domain points to that live site using DNS records or nameservers.</span>
+                    </div>
+                    <div class="learning-source-card">
+                        <strong>Learning & Application</strong>
+                        <span>The practical application steps and exact details for implementing these 10 points are covered during the internship sessions and guided by the proprietary Learning Software provided by Dominal.</span>
+                    </div>
+                </aside>
+
+                <div class="module-right">
+                    <article class="point-card reveal">
+                        <div class="point-index">1</div>
+                        <div>
+                            <h4>What a website is made of</h4>
+                            <p>HTML gives the structure, CSS gives the design, and JavaScript adds interaction. Before
+                                React or bigger frameworks, these three are the core building blocks of the web.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">2</div>
+                        <div>
+                            <h4>How web pages connect together</h4>
+                            <p>Pages connect using links, buttons, navigation bars, and file paths. This helps interns
+                                understand how multi-page websites are organized.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">3</div>
+                        <div>
+                            <h4>How the browser reads a website</h4>
+                            <p>The browser loads HTML first, then CSS styles it, and JavaScript adds behavior. This
+                                gives students a simple mental model of page rendering.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">4</div>
+                        <div>
+                            <h4>What GitHub is used for</h4>
+                            <p>GitHub stores code online, keeps version history, helps collaboration, and acts as a
+                                source of truth for projects that will later be deployed.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">5</div>
+                        <div>
+                            <h4>What a repository is</h4>
+                            <p>A repository is a project space containing files, commits, branches, and updates. Interns
+                                should understand that every project usually lives inside a repo.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">6</div>
+                        <div>
+                            <h4>How Vercel hosting works</h4>
+                            <p>Vercel connects to a GitHub repository and turns the project into a live website. Updates
+                                pushed to the repo can automatically redeploy the site.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">7</div>
+                        <div>
+                            <h4>What deployment means</h4>
+                            <p>Deployment is the process of making local code available online so anyone can open it
+                                with a public URL in a browser.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">8</div>
+                        <div>
+                            <h4>How domains work</h4>
+                            <p>A domain is the human-friendly website name, like `example.com`, that people type instead
+                                of using a long technical hosting address.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">9</div>
+                        <div>
+                            <h4>How DNS and nameservers work</h4>
+                            <p>DNS tells the internet where the domain should point. Nameservers and DNS records connect
+                                the purchased domain to the correct hosting provider.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">10</div>
+                        <div>
+                            <h4>How domain-to-hosting connection happens</h4>
+                            <p>After buying a domain, you either change nameservers or add records like A or CNAME so
+                                the domain points to Vercel or another host correctly.</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <div class="module-divider container"></div>
+
+        <section id="module-2" class="module-section">
+            <div class="container module-shell">
+                <aside class="module-left reveal">
+                    <div class="module-num">02</div>
+                    <h3>Module 2<br>Supabase, Login, Live Data</h3>
+                    <p>
+                        This module explains how a frontend connects to a real backend using Supabase, including
+                        authentication, URL + anon key, and realtime-style app behavior.
+                    </p>
+                    <div class="module-tags">
+                        <span class="tag">Supabase</span>
+                        <span class="tag">Auth</span>
+                        <span class="tag">Realtime</span>
+                        <span class="tag">URL</span>
+                        <span class="tag">Anon Key</span>
+                    </div>
+                    <div class="example-box">
+                        <strong>Simple example</strong>
+                        <span>Connect a login page and task dashboard to a Supabase project so users can sign in and see
+                            live records instead of static dummy data.</span>
+                    </div>
+                    <div class="learning-source-card">
+                        <strong>Learning & Application</strong>
+                        <span>How to connect and configure these database features in a real project will be taught in detail throughout the internship using the specialized Learning Software from Dominal.</span>
+                    </div>
+                </aside>
+
+                <div class="module-right">
+                    <article class="point-card reveal">
+                        <div class="point-index">1</div>
+                        <div>
+                            <h4>What Supabase is</h4>
+                            <p>Supabase is a backend platform that gives database, authentication, APIs, storage, and
+                                realtime features from one project.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">2</div>
+                        <div>
+                            <h4>How a Supabase project is created</h4>
+                            <p>You create a project in the dashboard, choose region and credentials, and let Supabase
+                                provision the backend environment.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">3</div>
+                        <div>
+                            <h4>What the Project URL is</h4>
+                            <p>The Project URL is the unique address of the Supabase project. Your frontend uses it to
+                                know which backend instance it should talk to.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">4</div>
+                        <div>
+                            <h4>What the anon key is</h4>
+                            <p>The anon key is the public frontend key used to initialize the client safely for allowed
+                                operations. It identifies the app, not the individual user.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">5</div>
+                        <div>
+                            <h4>Why the service role key must stay private</h4>
+                            <p>The service role key has high privileges and should never be exposed in browser code. It
+                                belongs only in trusted server-side environments.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">6</div>
+                        <div>
+                            <h4>How the website connects to Supabase</h4>
+                            <p>The frontend initializes a Supabase client using the project URL and anon key, usually
+                                through environment variables or configuration values.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">7</div>
+                        <div>
+                            <h4>How data tables work in Supabase</h4>
+                            <p>Your app stores and reads data from tables such as users, tasks, internships, products,
+                                or project updates.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">8</div>
+                        <div>
+                            <h4>How login and authentication work</h4>
+                            <p>Supabase Auth manages signup, login, sessions, and identity so different users can
+                                securely access the app.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">9</div>
+                        <div>
+                            <h4>How live data works</h4>
+                            <p>Supabase can notify the frontend about inserts, updates, or deletes so UI data can update
+                                in near realtime without full page refreshes.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">10</div>
+                        <div>
+                            <h4>How frontend access stays safe</h4>
+                            <p>Security does not come from hiding the anon key. It comes from authentication, database
+                                permissions, and proper access control policies.</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <div class="module-divider container"></div>
+
+        <section id="module-3" class="module-section">
+            <div class="container module-shell">
+                <aside class="module-left reveal">
+                    <div class="module-num">03</div>
+                    <h3>Module 3<br>Professional Website UI Patterns</h3>
+                    <p>
+                        This module focuses on how to create proper, clean, impressive websites and web pages using
+                        disciplined design choices and useful UI patterns.
+                    </p>
+                    <div class="module-tags">
+                        <span class="tag">SVG</span>
+                        <span class="tag">White + Black</span>
+                        <span class="tag">Slider</span>
+                        <span class="tag">Bottom Nav</span>
+                        <span class="tag">Hamburger</span>
+                    </div>
+                    <div class="example-box">
+                        <strong>Simple example</strong>
+                        <span>Build a landing page with a proper hero section, SVG visuals, a white-background theme,
+                            bottom mobile taskbar, image slider, and a top-right three-line menu.</span>
+                    </div>
+                    <div class="learning-source-card">
+                        <strong>Learning & Application</strong>
+                        <span>The direct implementation guidelines and design systems for these 10 UI principles are explained during the internship sessions and supported by Dominal's custom Learning Software.</span>
+                    </div>
+                </aside>
+
+                <div class="module-right">
+                    <article class="point-card reveal">
+                        <div class="point-index">1</div>
+                        <div>
+                            <h4>Use SVGs instead of emojis</h4>
+                            <p>Icons and visuals should feel professional and branded. SVGs scale better, look cleaner,
+                                and match a proper product website more than emojis.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">2</div>
+                        <div>
+                            <h4>Keep white background, black text, and one accent color</h4>
+                            <p>A clean white background with black text and a limited dark-blue accent makes the website
+                                feel serious, modern, and premium instead of noisy.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">3</div>
+                        <div>
+                            <h4>Implement an image slider properly</h4>
+                            <p>Use sliders for portfolio previews, products, screenshots, or testimonials. The slider
+                                should feel useful and controlled, not distracting.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">4</div>
+                        <div>
+                            <h4>Add a bottom screen taskbar for mobile</h4>
+                            <p>When the site or web app has a few main actions, a bottom taskbar makes them easier to
+                                reach on phones and creates a more app-like experience.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">5</div>
+                        <div>
+                            <h4>Use a top-right three-line menu</h4>
+                            <p>The hamburger menu is useful for extra pages or secondary navigation so the main screen
+                                stays clean and uncluttered.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">6</div>
+                        <div>
+                            <h4>Create a proper hero section</h4>
+                            <p>A strong hero usually needs a clear heading, short description, one main CTA, and one
+                                visual or screenshot that communicates value fast.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">7</div>
+                        <div>
+                            <h4>Use proper section flow</h4>
+                            <p>Pages should feel complete and intentional with a structure such as hero, features,
+                                showcase, proof, FAQ, and footer rather than random blocks.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">8</div>
+                        <div>
+                            <h4>Keep buttons, cards, and spacing consistent</h4>
+                            <p>Consistency helps the entire page feel like one system. Random spacing or mismatched
+                                buttons can make a site look less professional.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">9</div>
+                        <div>
+                            <h4>Use proper SVG animations</h4>
+                            <p>Motion should feel subtle and professional. Clean line animations, shape transitions, or
+                                layered SVG movement can make the page more impressive.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">10</div>
+                        <div>
+                            <h4>Design mobile-first with readable content</h4>
+                            <p>Text, sections, navigation, and touch targets should work properly on smaller screens
+                                first so the site feels complete across devices.</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <div class="module-divider container"></div>
+
+        <section id="module-4" class="module-section">
+            <div class="container module-shell">
+                <aside class="module-left reveal">
+                    <div class="module-num">04</div>
+                    <h3>Module 4<br>AI API Integration Basic Chatbot</h3>
+                    <p>
+                        This module introduces direct AI API usage before custom data or RAG. Interns learn the basic
+                        request-response flow of a chatbot.
+                    </p>
+                    <div class="module-tags">
+                        <span class="tag">AI API</span>
+                        <span class="tag">Prompt</span>
+                        <span class="tag">Model</span>
+                        <span class="tag">Chatbot</span>
+                    </div>
+                    <div class="example-box">
+                        <strong>Simple example</strong>
+                        <span>Build a chatbot UI that takes a user message, sends it to a model through an API, and
+                            displays the response in a clean chat interface.</span>
+                    </div>
+                    <div class="learning-source-card">
+                        <strong>Learning & Application</strong>
+                        <span>Comprehensive details on setting up and programming these chatbot functions will be taught during the internship, utilizing the custom Learning Software given by Dominal.</span>
+                    </div>
+                </aside>
+
+                <div class="module-right">
+                    <article class="point-card reveal">
+                        <div class="point-index">1</div>
+                        <div>
+                            <h4>What an AI API is</h4>
+                            <p>An AI API lets your app send text to a model and receive a generated response back. This
+                                is the base of chatbot integration.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">2</div>
+                        <div>
+                            <h4>How a basic chatbot works</h4>
+                            <p>The user sends a message, the app sends it to the model, and the model returns a reply
+                                that is displayed in the chat UI.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">3</div>
+                        <div>
+                            <h4>What an API key is</h4>
+                            <p>An API key is a private credential that allows your backend or app logic to access the AI
+                                provider securely.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">4</div>
+                        <div>
+                            <h4>Frontend and backend roles</h4>
+                            <p>The frontend shows the interface, while the backend usually handles the secure API
+                                request so secrets are not exposed publicly.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">5</div>
+                        <div>
+                            <h4>What a model is</h4>
+                            <p>A model is the AI engine you choose based on speed, capability, and cost depending on the
+                                product feature you are building.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">6</div>
+                        <div>
+                            <h4>What prompts and message roles are</h4>
+                            <p>Instructions such as system guidance and user messages shape how the AI responds and what
+                                behavior it follows.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">7</div>
+                        <div>
+                            <h4>What temperature and max tokens mean</h4>
+                            <p>Temperature affects how creative or stable the answer feels, while max tokens helps limit
+                                length and usage.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">8</div>
+                        <div>
+                            <h4>How conversation history works</h4>
+                            <p>Past messages can be sent with the current one so the chatbot remembers the flow of the
+                                conversation inside a session.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">9</div>
+                        <div>
+                            <h4>How to handle loading and errors</h4>
+                            <p>A chatbot should show waiting states, error messages, and safe handling for failed
+                                requests or usage limits.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">10</div>
+                        <div>
+                            <h4>What this module does not include yet</h4>
+                            <p>This is direct AI API integration only. It does not yet use PDFs, company documents,
+                                databases, or custom data at answer time.</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <div class="module-divider container"></div>
+
+        <section id="module-5" class="module-section">
+            <div class="container module-shell">
+                <aside class="module-left reveal">
+                    <div class="module-num">05</div>
+                    <h3>Module 5<br>PWA Basics</h3>
+                    <p>
+                        This module teaches how a website becomes more app-like, installable, and capable of better
+                        offline behavior through Progressive Web App fundamentals.
+                    </p>
+                    <div class="module-tags">
+                        <span class="tag">PWA</span>
+                        <span class="tag">Manifest</span>
+                        <span class="tag">Service Worker</span>
+                        <span class="tag">Install</span>
+                    </div>
+                    <div class="example-box">
+                        <strong>Simple example</strong>
+                        <span>Turn a web app into an installable experience with a manifest, icons, service worker, and
+                            an install button for supported browsers.</span>
+                    </div>
+                    <div class="learning-source-card">
+                        <strong>Learning & Application</strong>
+                        <span>The step-by-step methods to convert web pages into installable applications will be taught during the internship program and through the custom Learning Software from Dominal.</span>
+                    </div>
+                </aside>
+
+                <div class="module-right">
+                    <article class="point-card reveal">
+                        <div class="point-index">1</div>
+                        <div>
+                            <h4>What a PWA is</h4>
+                            <p>A Progressive Web App is a website that behaves more like an app through installability,
+                                offline support, and a smoother experience on devices.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">2</div>
+                        <div>
+                            <h4>Why PWAs matter</h4>
+                            <p>They let users access a website in the browser but also install it like an app without
+                                building a full native application first.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">3</div>
+                        <div>
+                            <h4>What makes a site a PWA</h4>
+                            <p>A typical PWA needs a valid web app plus a manifest file, service worker, proper icons,
+                                and secure delivery over HTTPS.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">4</div>
+                        <div>
+                            <h4>What the manifest file does</h4>
+                            <p>The manifest tells the browser the app name, icons, theme, start URL, and how the app
+                                should appear when launched.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">5</div>
+                        <div>
+                            <h4>What a service worker does</h4>
+                            <p>A service worker helps control caching, offline loading, and some background-style
+                                behavior for the app.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">6</div>
+                        <div>
+                            <h4>How installability works</h4>
+                            <p>When the right signals are present, the browser can show an install prompt or allow the
+                                site to be added to the home screen or desktop.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">7</div>
+                        <div>
+                            <h4>App-like behavior</h4>
+                            <p>PWAs can open in standalone mode and reduce visible browser chrome so the interface feels
+                                more like a dedicated application.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">8</div>
+                        <div>
+                            <h4>Offline basics</h4>
+                            <p>Depending on caching strategy, some pages or assets can still load even when the network
+                                is weak or unavailable.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">9</div>
+                        <div>
+                            <h4>PWA icons and branding</h4>
+                            <p>Good icons in multiple sizes make the app look polished and trustworthy when installed on
+                                a phone or desktop.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">10</div>
+                        <div>
+                            <h4>Limits of PWAs</h4>
+                            <p>PWAs are powerful but still differ from fully native apps in some deeper device access
+                                and platform-specific behavior.</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <div class="module-divider container"></div>
+
+        <section id="module-6" class="module-section">
+            <div class="container module-shell">
+                <aside class="module-left reveal">
+                    <div class="module-num">06</div>
+                    <h3>Module 6<br>PWA Notifications</h3>
+                    <p>
+                        This module explains how an installed web app can alert users like a more app-like product
+                        through notification concepts, permissions, and timing.
+                    </p>
+                    <div class="module-tags">
+                        <span class="tag">Notifications</span>
+                        <span class="tag">Permission</span>
+                        <span class="tag">Push</span>
+                        <span class="tag">Service Worker</span>
+                    </div>
+                    <div class="example-box">
+                        <strong>Simple example</strong>
+                        <span>Create a task reminder notification flow that asks for permission properly and sends
+                            useful, timely alerts instead of spammy ones.</span>
+                    </div>
+                    <div class="learning-source-card">
+                        <strong>Learning & Application</strong>
+                        <span>Specific workflows and execution methods for handling notification permissions and push triggers are taught in the internship program via the Learning Software provided by Dominal.</span>
+                    </div>
+                </aside>
+
+                <div class="module-right">
+                    <article class="point-card reveal">
+                        <div class="point-index">1</div>
+                        <div>
+                            <h4>What PWA notifications are</h4>
+                            <p>They are alerts sent by a web app that appear like app notifications on a phone or
+                                desktop device.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">2</div>
+                        <div>
+                            <h4>Why notifications matter</h4>
+                            <p>Notifications help bring users back for updates, reminders, tasks, approvals, messages,
+                                or important product events.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">3</div>
+                        <div>
+                            <h4>Difference between web notifications and push notifications</h4>
+                            <p>Some notifications happen while the app is active, while push flows can notify users even
+                                when the app is not open in the foreground.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">4</div>
+                        <div>
+                            <h4>Notification permission</h4>
+                            <p>The browser must ask the user for permission before showing notifications, so
+                                notification access is never automatic.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">5</div>
+                        <div>
+                            <h4>The role of the service worker</h4>
+                            <p>Service workers are often used to support notification behavior and background logic for
+                                installed web apps.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">6</div>
+                        <div>
+                            <h4>When to ask for permission</h4>
+                            <p>Permission should be requested after the user sees value, not immediately on page load
+                                with no context.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">7</div>
+                        <div>
+                            <h4>Notification content</h4>
+                            <p>Good notifications use clear titles, useful messages, icons, and actions so the user
+                                knows why the alert matters.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">8</div>
+                        <div>
+                            <h4>Notification timing</h4>
+                            <p>Alerts should be timely, relevant, and controlled. Too many irrelevant notifications
+                                reduce trust and engagement.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">9</div>
+                        <div>
+                            <h4>User control</h4>
+                            <p>Users should be able to manage preferences or disable notifications so the experience
+                                respects their choice.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">10</div>
+                        <div>
+                            <h4>Limitations and support</h4>
+                            <p>Notification behavior varies by browser and device, so cross-device testing is an
+                                important part of implementation.</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <div class="module-divider container"></div>
+
+        <section id="module-7" class="module-section">
+            <div class="container module-shell">
+                <aside class="module-left reveal">
+                    <div class="module-num">07</div>
+                    <h3>Module 7<br>Electron Desktop Conversion</h3>
+                    <p>
+                        This module shows how a website or web app can be wrapped into a desktop application with a
+                        small Electron project structure and commands.
+                    </p>
+                    <div class="module-tags">
+                        <span class="tag">Electron</span>
+                        <span class="tag">package.json</span>
+                        <span class="tag">main.js</span>
+                        <span class="tag">npm</span>
+                    </div>
+                    <div class="example-box">
+                        <strong>Simple example</strong>
+                        <span>Wrap an existing website or CRM interface into a desktop window by creating an Electron
+                            project with `package.json`, `main.js`, and the app files.</span>
+                    </div>
+                    <div class="learning-source-card">
+                        <strong>Learning & Application</strong>
+                        <span>Detailed guidance on desktop app compilation and project packaging structures will be taught during the internship and using the dedicated Learning Software from Dominal.</span>
+                    </div>
+                </aside>
+
+                <div class="module-right">
+                    <article class="point-card reveal">
+                        <div class="point-index">1</div>
+                        <div>
+                            <h4>What Electron is</h4>
+                            <p>Electron is a framework for building desktop apps using HTML, CSS, and JavaScript and
+                                running them as Windows, macOS, or Linux applications.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">2</div>
+                        <div>
+                            <h4>Why convert a website to desktop</h4>
+                            <p>It lets you reuse web skills and often reuse existing UI code while packaging the product
+                                as a standalone desktop app.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">3</div>
+                        <div>
+                            <h4>What files are usually needed</h4>
+                            <p>A basic Electron setup usually includes `package.json`, `main.js`, your web files like
+                                `index.html`, and optionally `preload.js` and assets.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">4</div>
+                        <div>
+                            <h4>What package.json does</h4>
+                            <p>`package.json` stores project metadata, the app entry, and scripts such as `start`, which
+                                tells npm how to launch Electron.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">5</div>
+                        <div>
+                            <h4>What main.js does</h4>
+                            <p>`main.js` creates the Electron window and tells it what to load — either a local HTML
+                                file or a hosted URL.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">6</div>
+                        <div>
+                            <h4>Local app vs hosted app</h4>
+                            <p>Electron can load website files bundled inside the app or wrap a live deployed website
+                                inside a desktop shell.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">7</div>
+                        <div>
+                            <h4>Basic setup commands</h4>
+                            <p>Common starter commands are `npm init -y`, `npm install electron --save-dev`, then adding
+                                a start script and running `npm start`.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">8</div>
+                        <div>
+                            <h4>Useful optional files</h4>
+                            <p>`preload.js` can expose safe functionality between Electron and the web app, and app
+                                icons improve branding and polish.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">9</div>
+                        <div>
+                            <h4>How packaging works</h4>
+                            <p>After local testing, tools like Electron Forge or Electron Builder can package the
+                                project into installable desktop builds.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">10</div>
+                        <div>
+                            <h4>When Electron is the right choice</h4>
+                            <p>Electron is useful when you want desktop distribution, installer support, local
+                                integration, and a stronger app-like delivery model without rewriting everything
+                                natively.</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <div class="module-divider container"></div>
+
+        <section id="module-8" class="module-section">
+            <div class="container module-shell">
+                <aside class="module-left reveal">
+                    <div class="module-num">08</div>
+                    <h3>Module 8<br>RAG Basics With Custom Data</h3>
+                    <p>
+                        This final module introduces how AI becomes more useful for company or project-specific answers
+                        by retrieving relevant custom information before generating a response.
+                    </p>
+                    <div class="module-tags">
+                        <span class="tag">RAG</span>
+                        <span class="tag">Custom Data</span>
+                        <span class="tag">Chunks</span>
+                        <span class="tag">Embeddings</span>
+                    </div>
+                    <div class="example-box">
+                        <strong>Simple example</strong>
+                        <span>Ask a chatbot about your own notes, FAQ content, PDFs, or project documents so it answers
+                            using that material instead of only general model knowledge.</span>
+                    </div>
+                    <div class="learning-source-card">
+                        <strong>Learning & Application</strong>
+                        <span>How to construct and connect custom data knowledge bases for RAG workflows will be taught in detail during the internship and through the Learning Software created by Dominal.</span>
+                    </div>
+                </aside>
+
+                <div class="module-right">
+                    <article class="point-card reveal">
+                        <div class="point-index">1</div>
+                        <div>
+                            <h4>What RAG means</h4>
+                            <p>RAG stands for Retrieval-Augmented Generation, where the AI first retrieves useful
+                                information and then generates an answer using it.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">2</div>
+                        <div>
+                            <h4>Why RAG is needed</h4>
+                            <p>Normal AI chatbots may not know private or company-specific information, so RAG helps
+                                them answer from your own data.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">3</div>
+                        <div>
+                            <h4>What custom data means</h4>
+                            <p>Custom data can include PDFs, text files, FAQs, website content, notes, internal
+                                documents, or database records.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">4</div>
+                        <div>
+                            <h4>How RAG works in simple form</h4>
+                            <p>The user asks a question, the system finds relevant content, and then passes that
+                                selected content to the AI along with the question.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">5</div>
+                        <div>
+                            <h4>What retrieval means</h4>
+                            <p>Retrieval is the step where the app searches for the most relevant stored information
+                                before the model answers.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">6</div>
+                        <div>
+                            <h4>What chunks are</h4>
+                            <p>Long documents are split into smaller pieces called chunks so the system can search and
+                                match them more accurately.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">7</div>
+                        <div>
+                            <h4>Why embeddings matter</h4>
+                            <p>Embeddings help the system understand meaning and similarity so it can find related
+                                content even when wording differs.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">8</div>
+                        <div>
+                            <h4>What the AI actually sees</h4>
+                            <p>The model usually sees only the retrieved relevant pieces, not the entire database or all
+                                documents every time.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">9</div>
+                        <div>
+                            <h4>Why RAG is better than a plain chatbot</h4>
+                            <p>It can answer more accurately and specifically because the response is grounded in the
+                                company’s own information.</p>
+                        </div>
+                    </article>
+                    <article class="point-card reveal">
+                        <div class="point-index">10</div>
+                        <div>
+                            <h4>Where RAG is useful</h4>
+                            <p>RAG is useful for company assistants, internal help systems, SOP support, documentation
+                                bots, search tools, and business knowledge interfaces.</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+                <div class="summary-band reveal">
+                    <h2>What interns will leave with</h2>
+                    <p>
+                        By the end of the internship, interns should understand how to create websites, deploy them,
+                        connect real backend data, design more professional interfaces, add AI features, make web apps
+                        installable, wrap them as desktop apps, and understand the basics of AI systems powered by
+                        custom data.
+                    </p>
+
+                    <div class="summary-grid">
+                        <div class="summary-item">
+                            <strong>Live deployment mindset</strong>
+                            <span>GitHub, Vercel, domains, and how software becomes publicly accessible.</span>
+                        </div>
+                        <div class="summary-item">
+                            <strong>Real app logic</strong>
+                            <span>Auth, live data, structured interfaces, and product-level UI patterns.</span>
+                        </div>
+                        <div class="summary-item">
+                            <strong>Modern AI features</strong>
+                            <span>Basic chatbots first, then a clear understanding of RAG with custom data.</span>
+                        </div>
+                        <div class="summary-item">
+                            <strong>Platform expansion</strong>
+                            <span>PWA thinking, notification flow, and Electron-based desktop packaging.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="footer">
+            <div class="container">
+                <div class="footer-box reveal">
+                    <div>
+                        <p><strong style="color:var(--text)">Software Development Internship at Dominal Tech</strong>
+                        </p>
+                        <p>dominal.in • internship.dominal.in • 8 modules syllabus page</p>
+                    </div>
+                    <div class="nav-actions">
+                        <a href="#module-1" class="btn btn-ghost">Back to Top Modules</a>
+                        <a href="index.html" class="btn btn-primary">Go to Main Page</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Password protected screen initialization
+        document.addEventListener('DOMContentLoaded', async () => {
+            const initialLoader = document.getElementById('initial-loader');
+            const savedPassword = localStorage.getItem('modules_password_session');
+            let correctPassword = 'PASS_MODULES'; // default fallback for local previews
+
+            // Function to remove initial loader with smooth transition
+            function removeInitialLoader() {
+                if (initialLoader) {
+                    initialLoader.style.opacity = '0';
+                    setTimeout(() => initialLoader.remove(), 200);
+                }
+            }
+
+            // Fetch password from get-password Netlify function only in production or Netlify dev CLI
+            const isLocalFile = window.location.protocol === 'file:';
+            const isNetlifyDev = window.location.hostname === 'localhost' && window.location.port === '8888';
+            const isProduction = !isLocalFile && !window.location.hostname.includes('127.0.0.1') && !window.location.hostname.includes('localhost');
+
+            if (!isLocalFile && (isProduction || isNetlifyDev)) {
+                try {
+                    const response = await fetch('/.netlify/functions/get-password');
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (data.password) {
+                            correctPassword = data.password;
+                        }
+                    }
+                } catch (err) {
+                    console.warn("Could not fetch password from server, using local fallback.", err);
+                }
+            }
+
+            // Check if user has already unlocked
+            if (savedPassword === correctPassword) {
+                document.body.classList.remove('locked');
+                removeInitialLoader();
+                return;
+            }
+
+            // If not unlocked, set up the lock UI
+            removeInitialLoader();
+
+            const passwordScreen = document.createElement('div');
+            passwordScreen.id = 'password-screen';
+            passwordScreen.innerHTML = `
+                <div class="password-card">
+                    <div class="intern-notice">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
+                        Access only for interns at Dominal
+                    </div>
+                    <h2>Syllabus Access Protected</h2>
+                    <p>Enter the authorization password below to access the full 8-module syllabus contents.</p>
+                    <div class="password-input-wrapper">
+                        <input type="password" id="password-input" placeholder="Enter password..." autocomplete="current-password" />
+                        <button type="button" id="toggle-password-visibility" aria-label="Toggle password visibility">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="eye-icon">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                        </button>
+                        <div id="password-error">Incorrect password. Please try again.</div>
+                    </div>
+                    <button id="submit-password" class="btn-submit">Verify & Access</button>
+                </div>
+            `;
+            document.body.appendChild(passwordScreen);
+
+            const passwordInput = document.getElementById('password-input');
+            const submitBtn = document.getElementById('submit-password');
+            const toggleVisibilityBtn = document.getElementById('toggle-password-visibility');
+            const errorMsg = document.getElementById('password-error');
+
+            // Password toggle logic
+            toggleVisibilityBtn.addEventListener('click', () => {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                
+                // Toggle eye icon style
+                if (type === 'text') {
+                    toggleVisibilityBtn.style.color = 'var(--accent)';
+                    toggleVisibilityBtn.innerHTML = `
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="eye-icon">
+                            <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                            <line x1="1" y1="1" x2="23" y2="23"></line>
+                        </svg>
+                    `;
+                } else {
+                    toggleVisibilityBtn.style.color = 'var(--muted)';
+                    toggleVisibilityBtn.innerHTML = `
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="eye-icon">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                    `;
+                }
+            });
+
+            function verify() {
+                const entered = passwordInput.value;
+                if (entered === correctPassword) {
+                    localStorage.setItem('modules_password_session', entered);
+                    passwordScreen.style.opacity = '0';
+                    document.body.classList.remove('locked');
+                    setTimeout(() => passwordScreen.remove(), 300);
+                } else {
+                    errorMsg.style.display = 'block';
+                    passwordInput.classList.add('shake');
+                    setTimeout(() => passwordInput.classList.remove('shake'), 400);
+                }
+            }
+
+            submitBtn.addEventListener('click', verify);
+            passwordInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    verify();
+                }
+            });
+
+            // Focus input field with a short timeout to prevent autofocus blocking warning
+            setTimeout(() => {
+                passwordInput.focus();
+            }, 100);
+        });
+    </script>
+</body>
+
+</html>
