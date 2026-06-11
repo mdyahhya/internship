@@ -2170,9 +2170,14 @@
         document.addEventListener('DOMContentLoaded', async () => {
             const initialLoader = document.getElementById('initial-loader');
             const savedPassword = localStorage.getItem('modules_password_session');
-            let correctPassword = 'PASS_MODULES'; // default fallback for local previews
+            let correctPassword = 'PASS_MODULES'; // default fallback (local / function unavailable)
 
-            // Function to remove initial loader with smooth transition
+            console.log('%c[Dominal Auth] Starting password check...', 'color:#1e3774;font-weight:bold');
+            console.log('[Dominal Auth] Protocol:', window.location.protocol);
+            console.log('[Dominal Auth] Hostname:', window.location.hostname, '| Port:', window.location.port);
+            console.log('[Dominal Auth] Saved session in localStorage:', savedPassword ? 'EXISTS' : 'NONE');
+
+            // Remove initial loader
             function removeInitialLoader() {
                 if (initialLoader) {
                     initialLoader.style.opacity = '0';
@@ -2180,33 +2185,55 @@
                 }
             }
 
-            // Fetch password from get-password Netlify function only in production or Netlify dev CLI
-            const isLocalFile = window.location.protocol === 'file:';
-            const isNetlifyDev = window.location.hostname === 'localhost' && window.location.port === '8888';
-            const isProduction = !isLocalFile && !window.location.hostname.includes('127.0.0.1') && !window.location.hostname.includes('localhost');
+            // Try to fetch the correct password from the Netlify function
+            // Works on: deployed Netlify site, netlify dev (port 8888)
+            // Skips on:  file:// protocol (double-click open)
+            const isFileProtocol = window.location.protocol === 'file:';
 
-            if (!isLocalFile && (isProduction || isNetlifyDev)) {
+            if (!isFileProtocol) {
+                console.log('[Dominal Auth] Not a file:// URL — attempting to fetch from Netlify function...');
                 try {
                     const response = await fetch('/.netlify/functions/get-password');
+                    console.log('[Dominal Auth] get-password response status:', response.status);
+
                     if (response.ok) {
                         const data = await response.json();
-                        if (data.password) {
+                        console.log('[Dominal Auth] Function returned data:', data);
+                        if (data && data.password) {
                             correctPassword = data.password;
+                            console.log('%c[Dominal Auth] ✅ Password loaded from Netlify function.', 'color:green;font-weight:bold');
+                        } else {
+                            console.warn('[Dominal Auth] ⚠️ Function responded but returned no password field. Using fallback.');
                         }
+                    } else if (response.status === 404) {
+                        console.warn('[Dominal Auth] ⚠️ get-password function not found (404). The netlify/functions/get-password.js may not be deployed yet. Using fallback password: PASS_MODULES');
+                    } else {
+                        console.warn('[Dominal Auth] ⚠️ Unexpected response status:', response.status, '— using fallback password.');
                     }
                 } catch (err) {
-                    console.warn("Could not fetch password from server, using local fallback.", err);
+                    console.warn('[Dominal Auth] ⚠️ Network error fetching password function:', err.message);
+                    console.warn('[Dominal Auth] Using fallback password: PASS_MODULES');
                 }
+            } else {
+                console.log('[Dominal Auth] file:// protocol detected — skipping function fetch. Using fallback password: PASS_MODULES');
             }
 
-            // Check if user has already unlocked
-            if (savedPassword === correctPassword) {
+            console.log('[Dominal Auth] Correct password resolved. Checking session...');
+
+            // Check if user already has a valid session
+            if (savedPassword && savedPassword === correctPassword) {
+                console.log('%c[Dominal Auth] ✅ Session valid — unlocking page.', 'color:green;font-weight:bold');
                 document.body.classList.remove('locked');
                 removeInitialLoader();
                 return;
+            } else if (savedPassword) {
+                console.log('[Dominal Auth] Saved session exists but does not match current password — showing lock screen.');
+                localStorage.removeItem('modules_password_session');
+            } else {
+                console.log('[Dominal Auth] No saved session — showing lock screen.');
             }
 
-            // If not unlocked, set up the lock UI
+            // Show lock screen
             removeInitialLoader();
 
             const passwordScreen = document.createElement('div');
@@ -2269,12 +2296,15 @@
 
             function verify() {
                 const entered = passwordInput.value;
+                console.log('[Dominal Auth] Password submitted. Checking...');
                 if (entered === correctPassword) {
+                    console.log('%c[Dominal Auth] ✅ Correct password — unlocking and saving session.', 'color:green;font-weight:bold');
                     localStorage.setItem('modules_password_session', entered);
                     passwordScreen.style.opacity = '0';
                     document.body.classList.remove('locked');
                     setTimeout(() => passwordScreen.remove(), 300);
                 } else {
+                    console.warn('[Dominal Auth] ❌ Incorrect password entered.');
                     errorMsg.style.display = 'block';
                     passwordInput.classList.add('shake');
                     setTimeout(() => passwordInput.classList.remove('shake'), 400);
