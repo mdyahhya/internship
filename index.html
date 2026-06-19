@@ -829,6 +829,98 @@
                 display: block;
             }
         }
+
+        /* Poster Modal Styles */
+        .poster-card img {
+            cursor: pointer;
+            transition: transform 0.25s ease;
+        }
+
+        .poster-card img:hover {
+            transform: scale(1.03);
+        }
+
+        .poster-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            background: rgba(13, 27, 61, 0.88);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            padding: 20px;
+        }
+
+        .poster-modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .poster-modal-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transform: scale(0.95);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .poster-modal.active .poster-modal-content {
+            transform: scale(1);
+        }
+
+        .poster-modal-img {
+            max-width: 100%;
+            max-height: 85vh;
+            border-radius: 20px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            object-fit: contain;
+        }
+
+        .poster-modal-close {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            backdrop-filter: blur(4px);
+        }
+
+        .poster-modal-close:hover {
+            background: #fff;
+            color: var(--accent);
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            .poster-modal-close {
+                top: auto;
+                bottom: -60px;
+                right: 50%;
+                transform: translateX(50%);
+            }
+
+            .poster-modal-close:hover {
+                transform: translateX(50%) scale(1.1);
+            }
+        }
     </style>
 </head>
 
@@ -843,7 +935,7 @@
                 <img src="dominalnew.jpeg" alt="Dominal Tech logo" class="brand-logo" />
                 <div class="brand-meta">
                     <div class="brand-title">Software Development Internship at Dominal Tech</div>
-                    <div class="brand-sub">Hosted at internship.dominal.in • dominal.in</div>
+                    <div class="brand-sub">Hosted at internship.dominal.in &bull; dominal.in</div>
                 </div>
             </div>
 
@@ -871,7 +963,7 @@
                             <path d="M8 12H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
                             <path d="M12 8V16" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
                         </svg>
-                        8 Modules • 2 Months • Real Client Exposure
+                        8 Modules &bull; 2 Months &bull; Real Client Exposure
                     </div>
 
                     <h1>Software Development Internship at <span class="accent">Dominal Tech</span></h1>
@@ -958,12 +1050,12 @@
                                 <div class="module-pill">Module 1: Fundamental Setup</div>
                                 <div class="module-pill">Module 2: Backend & User Access</div>
                                 <div class="module-pill">Module 3: Premium UI Structures</div>
-                                <div class="module-pill">Modules 4–8: Advanced App Development</div>
+                                <div class="module-pill">Modules 4 to 8: Advanced Development</div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="poster-card">
+                    <!-- <div class="poster-card">
                         <img src="internship.jpeg" alt="Internship poster by Dominal Technology" />
                         <div>
                             <h3>Poster Highlights Included</h3>
@@ -973,7 +1065,7 @@
                                 modules page.
                             </p>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </section>
@@ -982,315 +1074,151 @@
             <div class="container">
                 <div class="section-head reveal">
                     <div>
-                        <h2>What this internship offers</h2>
+                        <h2>Internship Overview</h2>
                     </div>
                     <p>
-                        This internship is designed for students who want real software development exposure, not only
-                        theory. The flow combines teaching sessions, reviews, live tasks, deployment practice, and
-                        client-style execution.
+                        A project-driven internship designed to help students learn full-stack development, database
+                        connectivity, premium UI structures, and desktop/PWA apps.
                     </p>
                 </div>
 
                 <div class="benefits-grid">
-                    <article class="card reveal">
-                        <div class="icon-wrap">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                                <path d="M12 3L19 7V12C19 16.5 16 20.5 12 21C8 20.5 5 16.5 5 12V7L12 3Z"
-                                    stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
-                                <path d="M9.5 12.5L11.2 14.2L15 10.5" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round" />
-                            </svg>
-                        </div>
-                        <h3>Certificate and completion value</h3>
-                        <p>Internship completion certificate with strong practical learning orientation and hard-copy
-                            value as shown in the internship poster.</p>
-                    </article>
+                    <div class="list-card reveal">
+                        <h3>What We Offer</h3>
+                        <ul class="feature-list">
+                            <li><span class="tick">&check;</span><span><strong>Hard-copy Certificate:</strong> Earn a
+                                    physical internship certificate.</span></li>
+                            <li><span class="tick">&check;</span><span><strong>Real Portfolio:</strong> Build works to
+                                    showcase in interviews.</span></li>
+                            <li><span class="tick">&check;</span><span><strong>Industry Exposure:</strong> Learn actual
+                                    company software workflows.</span></li>
+                            <li><span class="tick">&check;</span><span><strong>Placement Support:</strong> Receive
+                                    placement and job interview guidance.</span></li>
+                        </ul>
+                    </div>
 
-                    <article class="card reveal">
-                        <div class="icon-wrap">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                                <path d="M12 20V10" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                                <path d="M18 20V4" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                                <path d="M6 20V14" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                            </svg>
-                        </div>
-                        <h3>Portfolio and product building</h3>
-                        <p>Guidance on building strong portfolio projects, shipping them live, and using them as proof
-                            of skill in real interviews and client work.</p>
-                    </article>
+                    <div class="list-card reveal">
+                        <h3>Your Role</h3>
+                        <ul class="feature-list">
+                            <li><span class="tick">&check;</span><span><strong>Structured Tasks:</strong> Follow
+                                    step-by-step project blueprints.</span></li>
+                            <li><span class="tick">&check;</span><span><strong>Live Guidance:</strong> Work with senior
+                                    developer reviews.</span></li>
+                            <li><span class="tick">&check;</span><span><strong>Weekly Code Submissions:</strong> Commit
+                                    and push code updates.</span></li>
+                            <li><span class="tick">&check;</span><span><strong>AI Assisted Coding:</strong> Learn to use
+                                    AI tools productively.</span></li>
+                        </ul>
+                    </div>
 
-                    <article class="card reveal">
-                        <div class="icon-wrap">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                                <path d="M16 8A4 4 0 1 1 8 8A4 4 0 0 1 16 8Z" stroke="currentColor" stroke-width="2" />
-                                <path d="M3 20C4.5 16.8 7.5 15 12 15C16.5 15 19.5 16.8 21 20" stroke="currentColor"
-                                    stroke-width="2" stroke-linecap="round" />
-                            </svg>
-                        </div>
-                        <h3>Mentorship beyond coding</h3>
-                        <p>Support on project approach, placement preparation, client acquisition thinking, and how real
-                            delivery workflows work inside a software company.</p>
-                    </article>
+                    <div class="list-card reveal">
+                        <h3>Who Can Apply</h3>
+                        <ul class="feature-list">
+                            <li><span class="tick">&check;</span><span><strong>Engineering Students:</strong> 2nd, 3rd,
+                                    and final year students.</span></li>
+                            <li><span class="tick">&check;</span><span><strong>BCA & MCA Students:</strong> Learners
+                                    focused on app building.</span></li>
+                            <li><span class="tick">&check;</span><span><strong>CS & IT Graduates:</strong> Graduates
+                                    seeking practical developer skills.</span></li>
+                            <li><span class="tick">&check;</span><span><strong>Self-Learners:</strong> Anyone wanting to
+                                    learn how to ship real code.</span></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section>
-            <div class="container two-col">
-                <div class="list-card reveal">
-                    <h3>What you will get from us</h3>
-                    <ul class="feature-list">
-                        <li><span class="tick">✓</span><span>Internship completion certificate (hard copy
-                                provided).</span></li>
-                        <li><span class="tick">✓</span><span>Guidance and help in building your own portfolio
-                                projects.</span></li>
-                        <li><span class="tick">✓</span><span>Mentorship on how to approach and acquire clients.</span>
-                        </li>
-                        <li><span class="tick">✓</span><span>Guidance on getting a job and placement preparation.</span>
-                        </li>
-                        <li><span class="tick">✓</span><span>Opportunity to work on live industry-level software
-                                projects.</span></li>
-                    </ul>
-                </div>
-
-                <div class="list-card reveal">
-                    <h3>Your role</h3>
-                    <ul class="feature-list">
-                        <li><span class="tick">✓</span><span>Work on existing projects with direct guidance from senior
-                                developers.</span></li>
-                        <li><span class="tick">✓</span><span>Follow assignments, instructions, structured workflows, and
-                                delivery standards.</span></li>
-                        <li><span class="tick">✓</span><span>Actively participate in reviews, progress updates, and
-                                team-style sessions.</span></li>
-                        <li><span class="tick">✓</span><span>Use AI tools as coding support while still learning how
-                                real software is built correctly.</span></li>
-                        <li><span class="tick">✓</span><span>Handle both internship tasks and selected practical work
-                                inspired by client requirements.</span></li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <section>
+        <section id="workflow-sec">
             <div class="container">
                 <div class="section-head reveal">
                     <div>
-                        <h2>How the internship runs</h2>
+                        <h2>How the Internship Runs</h2>
                     </div>
                     <p>
-                        The structure follows a high-discipline but practical format so interns learn by shipping,
-                        reviewing, correcting, and presenting output every week.
+                        A weekly cycle combining concept walk-throughs, practical code implementation, and peer reviews.
                     </p>
                 </div>
 
                 <div class="workflow">
                     <div class="step reveal">
                         <div class="num">1</div>
-                        <h4>Weekly Online Session</h4>
-                        <p>One-hour interactive group meeting covering core concepts, live walkthroughs, and code
-                            review.</p>
+                        <h4>Weekly Meeting</h4>
+                        <p>1-hour online interactive concept walk-through and review.</p>
                     </div>
                     <div class="step reveal">
                         <div class="num">2</div>
-                        <h4>Structured Task Release</h4>
-                        <p>Receive weekly implementation assignments designed around the current phase of development.
-                        </p>
+                        <h4>Task Release</h4>
+                        <p>Weekly project assignments released with step-by-step steps.</p>
                     </div>
                     <div class="step reveal">
                         <div class="num">3</div>
-                        <h4>Self-Paced Execution</h4>
-                        <p>Implement the practical objectives using step-by-step guidance and build out your features.
-                        </p>
+                        <h4>Coding & Build</h4>
+                        <p>Implement the code and deploy it to your live Vercel domains.</p>
                     </div>
                     <div class="step reveal">
                         <div class="num">4</div>
-                        <h4>Direct Feedback Cycle</h4>
-                        <p>Get personalized recommendations and code quality reviews before moving to the next stage.
-                        </p>
+                        <h4>Review & Sync</h4>
+                        <p>Get direct code reviews and sync before the next module.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section>
-            <div class="container">
-                <div class="schedule-card reveal">
-                    <div>
-                        <h3>8 Modules • 2 Months • Modern Product Workflow</h3>
-                        <p>
-                            The syllabus starts from fundamental web concepts and guides you step-by-step through
-                            database
-                            connection, interactive UI standards, custom logic integration, app wrappers, and local data
-                            systems.
-                        </p>
-
-                        <ul class="session-list">
-                            <li>
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                                    <path d="M8 2V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                                    <path d="M16 2V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                                    <rect x="3" y="4" width="18" height="17" rx="3" stroke="currentColor"
-                                        stroke-width="2" />
-                                    <path d="M3 9H21" stroke="currentColor" stroke-width="2" />
-                                </svg>
-                                <span><strong>Weekly Online Meeting:</strong> Interactive concept walkthrough, design
-                                    review, and group code analysis.</span>
-                            </li>
-                            <li>
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                                    <path d="M12 6V12L16 14" stroke="currentColor" stroke-width="2"
-                                        stroke-linecap="round" />
-                                    <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" />
-                                </svg>
-                                <span><strong>Continuous Support:</strong> Dedicated query resolution, debugging
-                                    assistance, and progress tracking.</span>
-                            </li>
-                            <li>
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                                    <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                                    <path d="M12 5L19 12L12 19" stroke="currentColor" stroke-width="2"
-                                        stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                                <span><strong>Parallel Learning:</strong> Independent practical tasks and real-world
-                                    company execution styles.</span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="mini-cards">
-                        <div class="mini-card">
-                            <strong>Module 1</strong>
-                            <span>Initial project initialization, setup, and global hosting procedures.</span>
-                        </div>
-                        <div class="mini-card">
-                            <strong>Module 2</strong>
-                            <span>Connecting remote database instances, authentication flows, and state
-                                management.</span>
-                        </div>
-                        <div class="mini-card">
-                            <strong>Module 3</strong>
-                            <span>Advanced layout structures, visual element design, responsive flows, and custom
-                                navigation.</span>
-                        </div>
-                        <div class="mini-card">
-                            <strong>Modules 4–8</strong>
-                            <span>Advanced interactive components, mobile-focused optimization, local packaging, and
-                                intelligent data systems.</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="apply">
-            <div class="container">
-                <div class="section-head reveal">
-                    <div>
-                        <h2>Who can apply</h2>
-                    </div>
-                    <p>
-                        The internship is open to students and graduates who want serious software development exposure
-                        and are ready to work through structured weekly progress.
-                    </p>
-                </div>
-
-                <div class="apply-grid">
-                    <article class="card reveal">
-                        <div class="icon-wrap">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                                <path d="M12 5V19" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                                <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                            </svg>
-                        </div>
-                        <h3>Engineering students</h3>
-                        <p>2nd, 3rd, and final year engineering students who want applied software development learning.
-                        </p>
-                    </article>
-
-                    <article class="card reveal">
-                        <div class="icon-wrap">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                                <rect x="4" y="5" width="16" height="14" rx="3" stroke="currentColor"
-                                    stroke-width="2" />
-                                <path d="M8 9H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                                <path d="M8 13H13" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                            </svg>
-                        </div>
-                        <h3>BCA / MCA students</h3>
-                        <p>Students from application and software-focused programs who want stronger product-building
-                            experience.</p>
-                    </article>
-
-                    <article class="card reveal">
-                        <div class="icon-wrap">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                                <path d="M3 20H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                                <path d="M7 20V10" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                                <path d="M12 20V4" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                                <path d="M17 20V13" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                            </svg>
-                        </div>
-                        <h3>CS / IT graduates</h3>
-                        <p>Computer Science and IT graduates who want portfolio quality projects and real workflow
-                            understanding.</p>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <section>
+        <section id="about">
             <div class="container about-grid">
                 <div class="list-card reveal">
-                    <h3>About our work</h3>
+                    <h3>About Dominal Tech</h3>
                     <p style="margin:0 0 16px; color:var(--muted);">
-                        Dominal Technology is actively working as a technology partner for growing businesses and
-                        software initiatives. The company profile in the poster mentions ongoing work across web
-                        development, Android applications, CRM systems, desktop software, and AI-based solutions, along
-                        with delivery experience for many clients and major project handling.
+                        Dominal Tech is a modern technology studio building web platforms, mobile systems, custom CRMs,
+                        and AI solutions. This internship exposes learners to the exact project cycles and coding styles
+                        we use daily.
                     </p>
                     <ul class="feature-list">
-                        <li><span class="tick">✓</span><span>Technology partner for multiple growing businesses.</span>
-                        </li>
-                        <li><span class="tick">✓</span><span>50+ client software delivery exposure highlighted in the
-                                poster.</span></li>
-                        <li><span class="tick">✓</span><span>Experience mentioned across web, Android, CRM, desktop, and
-                                AI solution work.</span></li>
-                        <li><span class="tick">✓</span><span>Internship is designed to expose learners to the same
-                                real-world software mindset.</span></li>
+                        <li><span class="tick">&check;</span><span>Technology partner for multiple growing
+                                brands.</span></li>
+                        <li><span class="tick">&check;</span><span>50+ projects shipped across web, mobile, and
+                                desktop.</span></li>
                     </ul>
                 </div>
 
                 <div class="metrics">
                     <div class="metric reveal">
-                        <strong>8</strong>
-                        <span>Modules with structured progression from initial setup to advanced application
-                            workflows.</span>
+                        <strong>8 Modules</strong>
+                        <span>Structured syllabus from local web setup to custom data RAG bots.</span>
                     </div>
                     <div class="metric reveal">
-                        <strong>1</strong>
-                        <span>Weekly session — online meeting for concept teaching and progress review.</span>
+                        <strong>2 Months</strong>
+                        <span>Duration with weekly review calls and round-the-clock support.</span>
                     </div>
                     <div class="metric reveal">
-                        <strong>Live</strong>
-                        <span>Industry-style work, practical updates, and execution-based learning.</span>
+                        <strong>Live Sites</strong>
+                        <span>All projects you build will be hosted live on public domains.</span>
                     </div>
                     <div class="metric reveal">
-                        <strong>1</strong>
-                        <span>Dedicated next page for all modules, points, explanations, and examples.</span>
+                        <strong>1-on-1 Guidance</strong>
+                        <span>Direct debugging help and portfolio building walkthroughs.</span>
                     </div>
                 </div>
             </div>
 
-            <div class="container">
+            <div class="container" style="margin-top: 30px;">
                 <div class="cta-band reveal">
                     <div>
-                        <h3>See the full 8-module syllabus</h3>
+                        <h3>See the Full 8-Module Syllabus</h3>
                         <p>
-                            Open the modules page to view every module with all 10 points, short explanations, examples,
-                            and the structured learning path we discussed for this internship program.
+                            View the interactive syllabus details, including all 80 implementation points with clear
+                            explanations.
                         </p>
                     </div>
-                    <a href="modules.html" class="btn btn-primary">Open Modules Page</a>
+                    <a href="modules.html" class="btn btn-primary">
+                        Open Syllabus
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"
+                            style="margin-left: 6px;">
+                            <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                            <path d="M13 6L19 12L13 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </a>
                 </div>
             </div>
         </section>
@@ -1300,9 +1228,9 @@
                 <div class="footer-box reveal">
                     <div>
                         <p><strong style="color:var(--text)">Contact (WhatsApp Only):</strong> 8766882442</p>
-                        <p>Dominal Tech • dominal.in • internship.dominal.in</p>
+                        <p>Dominal Tech &bull; dominal.in &bull; internship.dominal.in</p>
                     </div>
-                    <a href="modules.html" class="btn btn-ghost">Continue to Modules</a>
+                    <a href="modules.html" class="btn btn-ghost">Continue to Syllabus</a>
                 </div>
             </div>
         </section>
@@ -1329,6 +1257,52 @@
         }, { threshold: 0.12 });
 
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+    <!-- Poster Modal Overlay -->
+    <div id="poster-modal" class="poster-modal" aria-hidden="true">
+        <div class="poster-modal-content">
+            <button class="poster-modal-close" id="close-poster-modal" aria-label="Close modal">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            <img class="poster-modal-img" src="internship.jpeg" alt="Internship poster full size" />
+        </div>
+    </div>
+
+    <script>
+        // Poster Modal Script
+        const posterImg = document.querySelector('.poster-card img');
+        const posterModal = document.getElementById('poster-modal');
+        const closePosterModalBtn = document.getElementById('close-poster-modal');
+
+        if (posterImg && posterModal && closePosterModalBtn) {
+            const openModal = () => {
+                posterModal.classList.add('active');
+                posterModal.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
+            };
+
+            const closeModal = () => {
+                posterModal.classList.remove('active');
+                posterModal.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+            };
+
+            posterImg.addEventListener('click', openModal);
+            closePosterModalBtn.addEventListener('click', closeModal);
+            posterModal.addEventListener('click', (e) => {
+                if (e.target === posterModal) closeModal();
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && posterModal.classList.contains('active')) {
+                    closeModal();
+                }
+            });
+        }
     </script>
 </body>
 
